@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation System</title>
+    <style>
+        :root {
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --focus-ring: 0 0 0 3px var(--color-focus-ring);
+  --focus-outline: 2px solid var(--color-primary);
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --letter-spacing-tight: -0.01em;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --radius-sm: 6px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+    --color-bg-1: rgba(29, 78, 216, 0.15);
+    --color-bg-2: rgba(180, 83, 9, 0.15);
+    --color-bg-3: rgba(21, 128, 61, 0.15);
+    --color-bg-4: rgba(185, 28, 28, 0.15);
+    --color-bg-5: rgba(107, 33, 168, 0.15);
+    --color-bg-6: rgba(194, 65, 12, 0.15);
+    --color-bg-7: rgba(190, 24, 93, 0.15);
+    --color-bg-8: rgba(8, 145, 178, 0.15);
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
+}
+
+.app-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-card-border);
+  padding: var(--space-24) var(--space-32);
+  margin-bottom: var(--space-32);
+}
+
+.app-header h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-8);
+  color: var(--color-text);
+}
+
+.app-header p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-32);
+}
+
+.section {
+  margin-bottom: var(--space-32);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-20);
+}
+
+.section-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.section-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-4);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-12);
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-20);
+  margin-bottom: var(--space-32);
+}
+
+.movie-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.movie-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+.movie-card.rated {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-8);
+}
+
+.movie-header {
+  margin-bottom: var(--space-12);
+}
+
+.movie-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.movie-year {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.movie-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+.genre-tag {
+  padding: var(--space-4) var(--space-8);
+  background-color: var(--color-secondary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text);
+}
+
+.movie-description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-12);
+  line-height: 1.4;
+}
+
+.movie-rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-12);
+}
+
+.avg-rating {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.star-rating {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.star {
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--color-text-secondary);
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.star:hover,
+.star.active {
+  color: #f59e0b;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-24);
+  border: none;
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  font-family: var(--font-family-base);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.info-box {
+  background-color: var(--color-bg-1);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  margin-bottom: var(--space-24);
+}
+
+.info-box h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-8);
+  color: var(--color-text);
+}
+
+.info-box p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-8);
+  margin-bottom: var(--space-24);
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.tab {
+  padding: var(--space-12) var(--space-24);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  font-family: var(--font-family-base);
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.recommendation-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.recommendation-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.rec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-12);
+}
+
+.rec-info {
+  flex: 1;
+}
+
+.rec-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.rec-meta {
+  display: flex;
+  gap: var(--space-16);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+.predicted-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-12);
+  background-color: var(--color-bg-3);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.rec-reason {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin-top: var(--space-8);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-card-border-inner);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-32);
+  color: var(--color-text-secondary);
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: var(--space-16);
+}
+
+.empty-state-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-8);
+}
+
+.empty-state-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+}
+
+.hidden {
+  display: none;
+}
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+}
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <h1>🎬 Movie Recommendation System</h1>
+        <p>Rate movies you've watched and get personalized recommendations</p>
+    </div>
+
+    <div class="container">
+        <!-- Getting Started Section -->
+        <div class="info-box">
+            <h3>Getting Started</h3>
+            <p>Rate at least 3 movies by clicking on the stars below. Once you've rated enough movies, click the "Find Recommendations" button to see personalized suggestions based on your preferences using both content-based and collaborative filtering algorithms.</p>
+        </div>
+
+        <!-- Rating Section -->
+        <section class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Rate Movies</h2>
+                    <p class="section-subtitle">Click stars to rate movies you've watched</p>
+                </div>
+                <div class="badge" id="rating-count">0 ratings</div>
+            </div>
+            <div class="movies-grid" id="movies-grid"></div>
+            <div style="text-align: center; margin-top: var(--space-24);">
+                <button class="btn btn-primary" id="find-recommendations" disabled>
+                    Find Recommendations
+                </button>
+            </div>
+        </section>
+
+        <!-- Recommendations Section -->
+        <section class="section hidden" id="recommendations-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Your Recommendations</h2>
+                    <p class="section-subtitle">Based on your ratings and preferences</p>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="content-based">Content-Based Filtering</button>
+                <button class="tab" data-tab="collaborative">Collaborative Filtering</button>
+            </div>
+
+            <!-- Content-Based Tab -->
+            <div class="tab-content active" id="content-based">
+                <div class="info-box">
+                    <h3>About Content-Based Filtering</h3>
+                    <p>This method recommends movies similar to the ones you've rated highly. It analyzes genres and themes to find movies that match your preferences.</p>
+                </div>
+                <div class="recommendations-list" id="content-based-list"></div>
+            </div>
+
+            <!-- Collaborative Filtering Tab -->
+            <div class="tab-content" id="collaborative">
+                <div class="info-box">
+                    <h3>About Collaborative Filtering</h3>
+                    <p>This method finds users with similar tastes to yours and recommends movies they've rated highly. It's based on the wisdom of the crowd.</p>
+                </div>
+                <div class="recommendations-list" id="collaborative-list"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Movie Database
+        const movies = [
+            { id: 1, title: "The Dark Knight", year: 2008, genres: ["Action", "Crime", "Drama"], rating: 4.5, description: "A masked vigilante fights crime in Gotham City" },
+            { id: 2, title: "Inception", year: 2010, genres: ["Sci-Fi", "Action", "Thriller"], rating: 4.4, description: "A thief who steals corporate secrets through dream-sharing tech" },
+            { id: 3, title: "The Shawshank Redemption", year: 1994, genres: ["Drama"], rating: 4.9, description: "Two imprisoned men bond over a number of years" },
+            { id: 4, title: "Interstellar", year: 2014, genres: ["Sci-Fi", "Drama", "Adventure"], rating: 4.3, description: "A team of explorers travel through a wormhole in space" },
+            { id: 5, title: "Pulp Fiction", year: 1994, genres: ["Crime", "Drama"], rating: 4.3, description: "The lives of two mob hitmen, a boxer, and a gangster's wife" },
+            { id: 6, title: "Forrest Gump", year: 1994, genres: ["Drama", "Romance"], rating: 4.3, description: "The presidencies of Kennedy and Johnson unfold through the perspective of an Alabama man" },
+            { id: 7, title: "The Matrix", year: 1999, genres: ["Sci-Fi", "Action"], rating: 4.3, description: "A hacker learns about the true nature of reality and his role in the war against its controllers" },
+            { id: 8, title: "Titanic", year: 1997, genres: ["Romance", "Drama"], rating: 4.2, description: "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the Titanic" },
+            { id: 9, title: "The Avengers", year: 2012, genres: ["Action", "Sci-Fi"], rating: 4.2, description: "Earth's mightiest heroes must come together and learn to fight as a team" },
+            { id: 10, title: "Gladiator", year: 2000, genres: ["Action", "Drama", "History"], rating: 4.2, description: "A former Roman General sets out to exact vengeance against the corrupt emperor" },
+            { id: 11, title: "The Notebook", year: 2004, genres: ["Romance", "Drama"], rating: 4.1, description: "A poor yet passionate street musician falls in love with a rich and beautiful debutante" },
+            { id: 12, title: "Avatar", year: 2009, genres: ["Sci-Fi", "Action", "Adventure"], rating: 4.0, description: "A paraplegic Marine dispatched to the moon Pandora on a unique mission" },
+            { id: 13, title: "Goodfellas", year: 1990, genres: ["Crime", "Drama"], rating: 4.3, description: "The story of Henry Hill and his life in the mob" },
+            { id: 14, title: "The Conjuring", year: 2013, genres: ["Horror", "Thriller"], rating: 4.1, description: "Paranormal investigators work to help a family terrorized by a dark presence" },
+            { id: 15, title: "Toy Story", year: 1995, genres: ["Animation", "Comedy", "Family"], rating: 4.3, description: "A cowboy doll is jealous of a new spaceman action figure" }
+        ];
+
+        // Simulated User Profiles for Collaborative Filtering
+        const simulatedUsers = [
+            { id: "user_1", name: "Action Lover", ratings: { 1: 5, 2: 5, 7: 4, 9: 5, 10: 4, 12: 4 } },
+            { id: "user_2", name: "Drama Enthusiast", ratings: { 3: 5, 4: 4, 5: 4, 6: 4, 8: 3, 11: 4 } },
+            { id: "user_3", name: "Sci-Fi Fan", ratings: { 2: 5, 4: 5, 7: 5, 9: 4, 12: 5 } },
+            { id: "user_4", name: "Crime Thriller Fan", ratings: { 1: 4, 5: 5, 10: 3, 13: 5 } },
+            { id: "user_5", name: "Romance Lover", ratings: { 6: 5, 8: 5, 11: 5, 4: 3 } }
+        ];
+
+        // User ratings (in-memory storage)
+        let userRatings = {};
+
+        // Initialize the app
+        function init() {
+            renderMovies();
+            setupEventListeners();
+        }
+
+        // Render movies grid
+        function renderMovies() {
+            const grid = document.getElementById('movies-grid');
+            grid.innerHTML = '';
+
+            movies.forEach(movie => {
+                const card = createMovieCard(movie);
+                grid.appendChild(card);
+            });
+        }
+
+        // Create movie card element
+        function createMovieCard(movie) {
+            const card = document.createElement('div');
+            card.className = 'movie-card';
+            if (userRatings[movie.id]) {
+                card.classList.add('rated');
+            }
+
+            const genresHTML = movie.genres.map(g => `<span class="genre-tag">${g}</span>`).join('');
+            const starsHTML = createStarsHTML(movie.id);
+
+            card.innerHTML = `
+                <div class="movie-header">
+                    <div class="movie-title">${movie.title}</div>
+                    <div class="movie-year">${movie.year}</div>
+                </div>
+                <div class="movie-genres">${genresHTML}</div>
+                <div class="movie-description">${movie.description}</div>
+                <div class="movie-rating">
+                    <span class="avg-rating">★ ${movie.rating.toFixed(1)}</span>
+                </div>
+                <div class="star-rating" data-movie-id="${movie.id}">
+                    ${starsHTML}
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Create stars HTML
+        function createStarsHTML(movieId) {
+            const userRating = userRatings[movieId] || 0;
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                const activeClass = i <= userRating ? 'active' : '';
+                html += `<span class="star ${activeClass}" data-rating="${i}">★</span>`;
+            }
+            return html;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Star rating clicks
+            document.getElementById('movies-grid').addEventListener('click', (e) => {
+                if (e.target.classList.contains('star')) {
+                    const rating = parseInt(e.target.dataset.rating);
+                    const movieId = parseInt(e.target.closest('.star-rating').dataset.movieId);
+                    rateMovie(movieId, rating);
+                }
+            });
+
+            // Find recommendations button
+            document.getElementById('find-recommendations').addEventListener('click', () => {
+                generateRecommendations();
+            });
+
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+        }
+
+        // Rate a movie
+        function rateMovie(movieId, rating) {
+            userRatings[movieId] = rating;
+            updateUI();
+        }
+
+        // Update UI after rating change
+        function updateUI() {
+            // Update rating count
+            const count = Object.keys(userRatings).length;
+            document.getElementById('rating-count').textContent = `${count} rating${count !== 1 ? 's' : ''}`;
+
+            // Enable/disable find recommendations button
+            const findBtn = document.getElementById('find-recommendations');
+            findBtn.disabled = count < 3;
+
+            // Re-render movies to update visual state
+            renderMovies();
+        }
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === tabName);
+            });
+        }
+
+        // Generate recommendations
+        function generateRecommendations() {
+            const contentBasedRecs = getContentBasedRecommendations();
+            const collaborativeRecs = getCollaborativeRecommendations();
+
+            displayRecommendations('content-based-list', contentBasedRecs, 'content');
+            displayRecommendations('collaborative-list', collaborativeRecs, 'collaborative');
+
+            // Show recommendations section
+            document.getElementById('recommendations-section').classList.remove('hidden');
+
+            // Scroll to recommendations
+            document.getElementById('recommendations-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Content-Based Filtering Algorithm
+        function getContentBasedRecommendations() {
+            const ratedMovies = Object.keys(userRatings).map(id => parseInt(id));
+            const unratedMovies = movies.filter(m => !userRatings[m.id]);
+
+            const recommendations = unratedMovies.map(movie => {
+                let totalSimilarity = 0;
+                let similarMovies = [];
+
+                ratedMovies.forEach(ratedId => {
+                    const ratedMovie = movies.find(m => m.id === ratedId);
+                    const similarity = calculateGenreSimilarity(movie.genres, ratedMovie.genres);
+                    
+                    if (similarity > 0) {
+                        totalSimilarity += similarity * userRatings[ratedId];
+                        if (similarity > 0.3) {
+                            similarMovies.push(ratedMovie.title);
+                        }
+                    }
+                });
+
+                const avgSimilarity = totalSimilarity / ratedMovies.length;
+                const predictedRating = Math.min(5, avgSimilarity);
+
+                return {
+                    movie,
+                    predictedRating,
+                    reason: similarMovies.length > 0 
+                        ? `Similar to: ${similarMovies.slice(0, 2).join(', ')}` 
+                        : 'Based on your genre preferences'
+                };
+            });
+
+            recommendations.sort((a, b) => b.predictedRating - a.predictedRating);
+            return recommendations.slice(0, 5);
+        }
+
+        // Calculate genre similarity
+        function calculateGenreSimilarity(genres1, genres2) {
+            const set1 = new Set(genres1);
+            const set2 = new Set(genres2);
+            
+            const intersection = [...set1].filter(g => set2.has(g)).length;
+            const union = new Set([...set1, ...set2]).size;
+            
+            return union > 0 ? intersection / union : 0;
+        }
+
+        // Collaborative Filtering Algorithm
+        function getCollaborativeRecommendations() {
+            const ratedMovies = Object.keys(userRatings).map(id => parseInt(id));
+            const unratedMovies = movies.filter(m => !userRatings[m.id]);
+
+            // Calculate similarity with each simulated user
+            const userSimilarities = simulatedUsers.map(simUser => {
+                const similarity = calculateUserSimilarity(userRatings, simUser.ratings);
+                return { user: simUser, similarity };
+            }).filter(u => u.similarity > 0);
+
+            userSimilarities.sort((a, b) => b.similarity - a.similarity);
+
+            // Generate recommendations based on similar users
+            const recommendations = unratedMovies.map(movie => {
+                let weightedSum = 0;
+                let similaritySum = 0;
+                let recommendingUsers = [];
+
+                userSimilarities.forEach(({ user, similarity }) => {
+                    if (user.ratings[movie.id]) {
+                        weightedSum += user.ratings[movie.id] * similarity;
+                        similaritySum += similarity;
+                        recommendingUsers.push({ name: user.name, rating: user.ratings[movie.id] });
+                    }
+                });
+
+                const predictedRating = similaritySum > 0 ? weightedSum / similaritySum : 0;
+
+                return {
+                    movie,
+                    predictedRating,
+                    reason: recommendingUsers.length > 0
+                        ? `Recommended by: ${recommendingUsers.slice(0, 2).map(u => `${u.name} (${u.rating}★)`).join(', ')}`
+                        : 'Based on similar users'
+                };
+            });
+
+            recommendations.sort((a, b) => b.predictedRating - a.predictedRating);
+            return recommendations.slice(0, 5).filter(r => r.predictedRating > 0);
+        }
+
+        // Calculate similarity between two users
+        function calculateUserSimilarity(ratings1, ratings2) {
+            const commonMovies = Object.keys(ratings1).filter(id => ratings2[id]);
+            
+            if (commonMovies.length === 0) return 0;
+
+            // Simple correlation based on common ratings
+            let sumProduct = 0;
+            let sum1Sq = 0;
+            let sum2Sq = 0;
+
+            commonMovies.forEach(id => {
+                const r1 = ratings1[id];
+                const r2 = ratings2[id];
+                sumProduct += r1 * r2;
+                sum1Sq += r1 * r1;
+                sum2Sq += r2 * r2;
+            });
+
+            const denominator = Math.sqrt(sum1Sq * sum2Sq);
+            return denominator > 0 ? sumProduct / denominator : 0;
+        }
+
+        // Display recommendations
+        function displayRecommendations(containerId, recommendations, type) {
+            const container = document.getElementById(containerId);
+            
+            if (recommendations.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎬</div>
+                        <div class="empty-state-title">No recommendations available</div>
+                        <div class="empty-state-text">Try rating more diverse movies to get better recommendations.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = recommendations.map(rec => {
+                const genresHTML = rec.movie.genres.map(g => `<span class="genre-tag">${g}</span>`).join('');
+                return `
+                    <div class="recommendation-card">
+                        <div class="rec-header">
+                            <div class="rec-info">
+                                <div class="rec-title">${rec.movie.title}</div>
+                                <div class="rec-meta">
+                                    <span>${rec.movie.year}</span>
+                                    <span>★ ${rec.movie.rating.toFixed(1)} avg</span>
+                                </div>
+                                <div class="movie-genres">${genresHTML}</div>
+                            </div>
+                            <div class="predicted-rating">
+                                <span>Predicted: ${rec.predictedRating.toFixed(1)}★</span>
+                            </div>
+                        </div>
+                        <div class="movie-description">${rec.movie.description}</div>
+                        <div class="rec-reason">${rec.reason}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize app on load
+        init();
+    </script>
+</body>
+</html>

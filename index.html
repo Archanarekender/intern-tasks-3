@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe - AI vs Human</title>
+    <style>
+        :root {
+  /* Primitive Color Tokens */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+
+  /* RGB versions for opacity control */
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+
+  /* Background color tokens (Light Mode) */
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+
+  /* Semantic Color Tokens (Light Mode) */
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+  /* Typography */
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-base: 14px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+
+  /* Spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
+    0 2px 4px -1px rgba(0, 0, 0, 0.02);
+
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+
+    --color-bg-1: rgba(29, 78, 216, 0.15);
+    --color-bg-2: rgba(180, 83, 9, 0.15);
+    --color-bg-3: rgba(21, 128, 61, 0.15);
+    --color-bg-4: rgba(185, 28, 28, 0.15);
+    --color-bg-5: rgba(107, 33, 168, 0.15);
+    --color-bg-6: rgba(194, 65, 12, 0.15);
+    --color-bg-7: rgba(190, 24, 93, 0.15);
+    --color-bg-8: rgba(8, 145, 178, 0.15);
+
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+  }
+}
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2')
+    format('woff2');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  padding: var(--space-32);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: var(--space-32);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-8);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+.game-container {
+  display: flex;
+  gap: var(--space-32);
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.game-board-section {
+  flex: 1;
+  min-width: 320px;
+}
+
+.game-info {
+  flex: 0 0 280px;
+  min-width: 280px;
+}
+
+.symbol-selection {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  margin-bottom: var(--space-24);
+  text-align: center;
+}
+
+.symbol-selection h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-16);
+}
+
+.symbol-buttons {
+  display: flex;
+  gap: var(--space-12);
+  justify-content: center;
+}
+
+.symbol-btn {
+  padding: var(--space-16) var(--space-32);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  border: 2px solid var(--color-border);
+  background: var(--color-secondary);
+  color: var(--color-text);
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.symbol-btn:hover {
+  background: var(--color-secondary-hover);
+  transform: translateY(-2px);
+}
+
+.symbol-btn:active {
+  transform: translateY(0);
+}
+
+.game-status {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  margin-bottom: var(--space-24);
+  text-align: center;
+}
+
+.status-text {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-8);
+}
+
+.turn-indicator {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  max-width: 400px;
+  margin: 0 auto var(--space-24);
+  background: var(--color-surface);
+  padding: var(--space-16);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+}
+
+.cell {
+  aspect-ratio: 1;
+  background: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:hover:not(.filled):not(:disabled) {
+  background: var(--color-secondary);
+  transform: scale(1.05);
+}
+
+.cell:disabled {
+  cursor: not-allowed;
+}
+
+.cell.filled {
+  cursor: default;
+}
+
+.cell.x {
+  color: var(--color-primary);
+}
+
+.cell.o {
+  color: var(--color-warning);
+}
+
+.cell.winning {
+  background: var(--color-bg-3);
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.controls {
+  text-align: center;
+}
+
+.new-game-btn {
+  padding: var(--space-12) var(--space-32);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  border: none;
+  border-radius: var(--radius-base);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.new-game-btn:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-2px);
+}
+
+.new-game-btn:active {
+  background: var(--color-primary-active);
+  transform: translateY(0);
+}
+
+.stats-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+  margin-bottom: var(--space-16);
+}
+
+.stats-panel h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-16);
+  color: var(--color-text);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--color-card-border-inner);
+}
+
+.stat-item:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.stat-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.move-history {
+  background: var(--color-surface);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-20);
+}
+
+.move-history h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-16);
+  color: var(--color-text);
+}
+
+.moves-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.move-item {
+  padding: var(--space-8);
+  background: var(--color-background);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.move-number {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  min-width: 20px;
+}
+
+.move-details {
+  color: var(--color-text);
+}
+
+.hidden {
+  display: none;
+}
+
+.game-result {
+  padding: var(--space-12);
+  border-radius: var(--radius-base);
+  margin-top: var(--space-12);
+  font-weight: var(--font-weight-semibold);
+}
+
+.game-result.win {
+  background: var(--color-bg-3);
+  color: var(--color-success);
+}
+
+.game-result.lose {
+  background: var(--color-bg-4);
+  color: var(--color-error);
+}
+
+.game-result.draw {
+  background: var(--color-bg-2);
+  color: var(--color-warning);
+}
+
+.ai-thinking {
+  display: inline-block;
+  margin-left: var(--space-8);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+  }
+  
+  .game-info {
+    flex: 1;
+    width: 100%;
+  }
+  
+  body {
+    padding: var(--space-16);
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tic-Tac-Toe</h1>
+            <p class="subtitle">Challenge the Unbeatable AI</p>
+        </header>
+
+        <div class="game-container">
+            <div class="game-board-section">
+                <div id="symbolSelection" class="symbol-selection">
+                    <h2>Choose Your Symbol</h2>
+                    <div class="symbol-buttons">
+                        <button class="symbol-btn" onclick="startGame('X')">X</button>
+                        <button class="symbol-btn" onclick="startGame('O')">O</button>
+                    </div>
+                </div>
+
+                <div id="gameStatus" class="game-status hidden">
+                    <div class="status-text" id="statusText">Game in progress</div>
+                    <div class="turn-indicator" id="turnIndicator"></div>
+                    <div id="gameResult" class="game-result hidden"></div>
+                </div>
+
+                <div id="boardContainer" class="hidden">
+                    <div class="board" id="board">
+                        <button class="cell" data-index="0" onclick="handleCellClick(0)"></button>
+                        <button class="cell" data-index="1" onclick="handleCellClick(1)"></button>
+                        <button class="cell" data-index="2" onclick="handleCellClick(2)"></button>
+                        <button class="cell" data-index="3" onclick="handleCellClick(3)"></button>
+                        <button class="cell" data-index="4" onclick="handleCellClick(4)"></button>
+                        <button class="cell" data-index="5" onclick="handleCellClick(5)"></button>
+                        <button class="cell" data-index="6" onclick="handleCellClick(6)"></button>
+                        <button class="cell" data-index="7" onclick="handleCellClick(7)"></button>
+                        <button class="cell" data-index="8" onclick="handleCellClick(8)"></button>
+                    </div>
+
+                    <div class="controls">
+                        <button class="new-game-btn" onclick="resetGame()">New Game</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <div id="statsPanel" class="stats-panel hidden">
+                    <h3>Algorithm Stats</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Nodes Explored:</span>
+                        <span class="stat-value" id="nodesExplored">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Nodes Pruned:</span>
+                        <span class="stat-value" id="nodesPruned">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Pruning %:</span>
+                        <span class="stat-value" id="pruningPercentage">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Time Taken:</span>
+                        <span class="stat-value" id="timeTaken">0ms</span>
+                    </div>
+                </div>
+
+                <div id="moveHistory" class="move-history hidden">
+                    <h3>Move History</h3>
+                    <div class="moves-list" id="movesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let humanPlayer = '';
+        let aiPlayer = '';
+        let currentPlayer = '';
+        let gameActive = false;
+        let moveHistory = [];
+        let totalNodesExplored = 0;
+        let totalNodesPruned = 0;
+
+        // Winning combinations
+        const winningCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        // Start game with selected symbol
+        function startGame(selectedSymbol) {
+            humanPlayer = selectedSymbol;
+            aiPlayer = selectedSymbol === 'X' ? 'O' : 'X';
+            currentPlayer = 'X'; // X always goes first
+            gameActive = true;
+            
+            board = ['', '', '', '', '', '', '', '', ''];
+            moveHistory = [];
+            totalNodesExplored = 0;
+            totalNodesPruned = 0;
+
+            document.getElementById('symbolSelection').classList.add('hidden');
+            document.getElementById('gameStatus').classList.remove('hidden');
+            document.getElementById('boardContainer').classList.remove('hidden');
+            document.getElementById('statsPanel').classList.remove('hidden');
+            document.getElementById('moveHistory').classList.remove('hidden');
+            document.getElementById('gameResult').classList.add('hidden');
+
+            renderBoard();
+            updateStatus();
+            updateStats();
+
+            // If AI goes first (human chose O)
+            if (aiPlayer === 'X') {
+                setTimeout(() => aiMove(), 500);
+            }
+        }
+
+        // Reset game
+        function resetGame() {
+            document.getElementById('symbolSelection').classList.remove('hidden');
+            document.getElementById('gameStatus').classList.add('hidden');
+            document.getElementById('boardContainer').classList.add('hidden');
+            document.getElementById('statsPanel').classList.add('hidden');
+            document.getElementById('moveHistory').classList.add('hidden');
+            
+            board = ['', '', '', '', '', '', '', '', ''];
+            gameActive = false;
+            moveHistory = [];
+            totalNodesExplored = 0;
+            totalNodesPruned = 0;
+        }
+
+        // Handle cell click
+        function handleCellClick(index) {
+            if (!gameActive || board[index] !== '' || currentPlayer !== humanPlayer) {
+                return;
+            }
+
+            makeMove(index, humanPlayer);
+            addToMoveHistory(humanPlayer, index);
+
+            if (checkWinner(board, humanPlayer)) {
+                endGame(`You Win! 🎉`);
+                highlightWinningCells(humanPlayer);
+                return;
+            }
+
+            if (isBoardFull()) {
+                endGame("It's a Draw! 🤝");
+                return;
+            }
+
+            currentPlayer = aiPlayer;
+            updateStatus();
+
+            // AI makes move after short delay
+            setTimeout(() => aiMove(), 300);
+        }
+
+        // AI makes move using Minimax with Alpha-Beta Pruning
+        function aiMove() {
+            if (!gameActive) return;
+
+            const startTime = performance.now();
+            let nodesExplored = 0;
+            let nodesPruned = 0;
+
+            const bestMove = findBestMove();
+            
+            const endTime = performance.now();
+            const timeTaken = (endTime - startTime).toFixed(2);
+
+            makeMove(bestMove.index, aiPlayer);
+            addToMoveHistory(aiPlayer, bestMove.index);
+
+            // Update stats
+            totalNodesExplored += bestMove.nodesExplored;
+            totalNodesPruned += bestMove.nodesPruned;
+            document.getElementById('timeTaken').textContent = `${timeTaken}ms`;
+            updateStats();
+
+            if (checkWinner(board, aiPlayer)) {
+                endGame(`AI Wins! 🤖`);
+                highlightWinningCells(aiPlayer);
+                return;
+            }
+
+            if (isBoardFull()) {
+                endGame("It's a Draw! 🤝");
+                return;
+            }
+
+            currentPlayer = humanPlayer;
+            updateStatus();
+        }
+
+        // Find best move using Minimax with Alpha-Beta Pruning
+        function findBestMove() {
+            let bestScore = -Infinity;
+            let bestMove = { index: -1, nodesExplored: 0, nodesPruned: 0 };
+            let nodesExplored = 0;
+            let nodesPruned = 0;
+
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') {
+                    board[i] = aiPlayer;
+                    const result = minimax(board, 0, false, -Infinity, Infinity);
+                    board[i] = '';
+
+                    nodesExplored += result.nodesExplored;
+                    nodesPruned += result.nodesPruned;
+
+                    if (result.score > bestScore) {
+                        bestScore = result.score;
+                        bestMove.index = i;
+                    }
+                }
+            }
+
+            bestMove.nodesExplored = nodesExplored;
+            bestMove.nodesPruned = nodesPruned;
+            return bestMove;
+        }
+
+        // Minimax algorithm with Alpha-Beta Pruning
+        function minimax(boardState, depth, isMaximizing, alpha, beta) {
+            let nodesExplored = 1;
+            let nodesPruned = 0;
+
+            // Check terminal states
+            if (checkWinner(boardState, aiPlayer)) {
+                return { score: 10 - depth, nodesExplored, nodesPruned };
+            }
+            if (checkWinner(boardState, humanPlayer)) {
+                return { score: depth - 10, nodesExplored, nodesPruned };
+            }
+            if (isBoardFull()) {
+                return { score: 0, nodesExplored, nodesPruned };
+            }
+
+            if (isMaximizing) {
+                let maxScore = -Infinity;
+                
+                for (let i = 0; i < 9; i++) {
+                    if (boardState[i] === '') {
+                        boardState[i] = aiPlayer;
+                        const result = minimax(boardState, depth + 1, false, alpha, beta);
+                        boardState[i] = '';
+                        
+                        nodesExplored += result.nodesExplored;
+                        nodesPruned += result.nodesPruned;
+                        
+                        maxScore = Math.max(maxScore, result.score);
+                        alpha = Math.max(alpha, result.score);
+                        
+                        if (beta <= alpha) {
+                            // Beta cutoff - prune remaining branches
+                            nodesPruned += countRemainingMoves(boardState, i);
+                            break;
+                        }
+                    }
+                }
+                return { score: maxScore, nodesExplored, nodesPruned };
+            } else {
+                let minScore = Infinity;
+                
+                for (let i = 0; i < 9; i++) {
+                    if (boardState[i] === '') {
+                        boardState[i] = humanPlayer;
+                        const result = minimax(boardState, depth + 1, true, alpha, beta);
+                        boardState[i] = '';
+                        
+                        nodesExplored += result.nodesExplored;
+                        nodesPruned += result.nodesPruned;
+                        
+                        minScore = Math.min(minScore, result.score);
+                        beta = Math.min(beta, result.score);
+                        
+                        if (beta <= alpha) {
+                            // Alpha cutoff - prune remaining branches
+                            nodesPruned += countRemainingMoves(boardState, i);
+                            break;
+                        }
+                    }
+                }
+                return { score: minScore, nodesExplored, nodesPruned };
+            }
+        }
+
+        // Count remaining empty cells after current index
+        function countRemainingMoves(boardState, currentIndex) {
+            let count = 0;
+            for (let i = currentIndex + 1; i < 9; i++) {
+                if (boardState[i] === '') count++;
+            }
+            return count;
+        }
+
+        // Check if a player has won
+        function checkWinner(boardState, player) {
+            return winningCombinations.some(combination => {
+                return combination.every(index => boardState[index] === player);
+            });
+        }
+
+        // Check if board is full
+        function isBoardFull() {
+            return board.every(cell => cell !== '');
+        }
+
+        // Make a move
+        function makeMove(index, player) {
+            board[index] = player;
+            renderBoard();
+        }
+
+        // Render the board
+        function renderBoard() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach((cell, index) => {
+                cell.textContent = board[index];
+                cell.className = 'cell';
+                
+                if (board[index] !== '') {
+                    cell.classList.add('filled');
+                    cell.classList.add(board[index].toLowerCase());
+                }
+                
+                cell.disabled = !gameActive || board[index] !== '' || currentPlayer !== humanPlayer;
+            });
+        }
+
+        // Update status display
+        function updateStatus() {
+            const statusText = document.getElementById('statusText');
+            const turnIndicator = document.getElementById('turnIndicator');
+
+            if (gameActive) {
+                if (currentPlayer === humanPlayer) {
+                    statusText.textContent = 'Your Turn';
+                    turnIndicator.textContent = `You are ${humanPlayer}`;
+                } else {
+                    statusText.textContent = 'AI is thinking';
+                    turnIndicator.innerHTML = 'Please wait<span class="ai-thinking">...</span>';
+                }
+            }
+        }
+
+        // End game
+        function endGame(message) {
+            gameActive = false;
+            const statusText = document.getElementById('statusText');
+            const turnIndicator = document.getElementById('turnIndicator');
+            const gameResult = document.getElementById('gameResult');
+            
+            statusText.textContent = 'Game Over';
+            turnIndicator.textContent = '';
+            
+            gameResult.textContent = message;
+            gameResult.classList.remove('hidden', 'win', 'lose', 'draw');
+            
+            if (message.includes('You Win')) {
+                gameResult.classList.add('win');
+            } else if (message.includes('AI Wins')) {
+                gameResult.classList.add('lose');
+            } else {
+                gameResult.classList.add('draw');
+            }
+            
+            renderBoard();
+        }
+
+        // Highlight winning cells
+        function highlightWinningCells(player) {
+            const combination = winningCombinations.find(combination => {
+                return combination.every(index => board[index] === player);
+            });
+
+            if (combination) {
+                combination.forEach(index => {
+                    const cell = document.querySelector(`[data-index="${index}"]`);
+                    cell.classList.add('winning');
+                });
+            }
+        }
+
+        // Add to move history
+        function addToMoveHistory(player, index) {
+            const row = Math.floor(index / 3) + 1;
+            const col = (index % 3) + 1;
+            moveHistory.push({ player, position: `(${row}, ${col})` });
+            updateMoveHistory();
+        }
+
+        // Update move history display
+        function updateMoveHistory() {
+            const movesList = document.getElementById('movesList');
+            movesList.innerHTML = '';
+
+            moveHistory.forEach((move, index) => {
+                const moveItem = document.createElement('div');
+                moveItem.className = 'move-item';
+                moveItem.innerHTML = `
+                    <span class="move-number">${index + 1}.</span>
+                    <span class="move-details">${move.player === humanPlayer ? 'You' : 'AI'} (${move.player}) → ${move.position}</span>
+                `;
+                movesList.appendChild(moveItem);
+            });
+
+            // Scroll to bottom
+            movesList.scrollTop = movesList.scrollHeight;
+        }
+
+        // Update stats display
+        function updateStats() {
+            document.getElementById('nodesExplored').textContent = totalNodesExplored;
+            document.getElementById('nodesPruned').textContent = totalNodesPruned;
+            
+            const totalNodes = totalNodesExplored + totalNodesPruned;
+            const pruningPercentage = totalNodes > 0 
+                ? ((totalNodesPruned / totalNodes) * 100).toFixed(1)
+                : 0;
+            document.getElementById('pruningPercentage').textContent = `${pruningPercentage}%`;
+        }
+    </script>
+</body>
+</html>

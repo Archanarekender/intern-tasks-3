@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile App Signup Flow Guide</title>
+    <style>
+        /* Design System */
+        :root {
+  /* Primitive Color Tokens */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-cream-50: rgba(252, 252, 249, 1);
+  --color-cream-100: rgba(255, 255, 253, 1);
+  --color-gray-200: rgba(245, 245, 245, 1);
+  --color-gray-300: rgba(167, 169, 169, 1);
+  --color-gray-400: rgba(119, 124, 124, 1);
+  --color-slate-500: rgba(98, 108, 113, 1);
+  --color-brown-600: rgba(94, 82, 64, 1);
+  --color-charcoal-700: rgba(31, 33, 33, 1);
+  --color-charcoal-800: rgba(38, 40, 40, 1);
+  --color-slate-900: rgba(19, 52, 59, 1);
+  --color-teal-300: rgba(50, 184, 198, 1);
+  --color-teal-400: rgba(45, 166, 178, 1);
+  --color-teal-500: rgba(33, 128, 141, 1);
+  --color-teal-600: rgba(29, 116, 128, 1);
+  --color-teal-700: rgba(26, 104, 115, 1);
+  --color-teal-800: rgba(41, 150, 161, 1);
+  --color-red-400: rgba(255, 84, 89, 1);
+  --color-red-500: rgba(192, 21, 47, 1);
+  --color-orange-400: rgba(230, 129, 97, 1);
+  --color-orange-500: rgba(168, 75, 47, 1);
+
+  --color-brown-600-rgb: 94, 82, 64;
+  --color-teal-500-rgb: 33, 128, 141;
+  --color-slate-900-rgb: 19, 52, 59;
+  --color-slate-500-rgb: 98, 108, 113;
+  --color-red-500-rgb: 192, 21, 47;
+  --color-red-400-rgb: 255, 84, 89;
+  --color-orange-500-rgb: 168, 75, 47;
+  --color-orange-400-rgb: 230, 129, 97;
+
+  --color-bg-1: rgba(59, 130, 246, 0.08);
+  --color-bg-2: rgba(245, 158, 11, 0.08);
+  --color-bg-3: rgba(34, 197, 94, 0.08);
+  --color-bg-4: rgba(239, 68, 68, 0.08);
+  --color-bg-5: rgba(147, 51, 234, 0.08);
+  --color-bg-6: rgba(249, 115, 22, 0.08);
+  --color-bg-7: rgba(236, 72, 153, 0.08);
+  --color-bg-8: rgba(6, 182, 212, 0.08);
+
+  --color-background: var(--color-cream-50);
+  --color-surface: var(--color-cream-100);
+  --color-text: var(--color-slate-900);
+  --color-text-secondary: var(--color-slate-500);
+  --color-primary: var(--color-teal-500);
+  --color-primary-hover: var(--color-teal-600);
+  --color-primary-active: var(--color-teal-700);
+  --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+  --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+  --color-btn-primary-text: var(--color-cream-50);
+  --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+  --color-error: var(--color-red-500);
+  --color-success: var(--color-teal-500);
+  --color-warning: var(--color-orange-500);
+  --color-info: var(--color-slate-500);
+  --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+  --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+  --focus-ring: 0 0 0 3px var(--color-focus-ring);
+  --focus-outline: 2px solid var(--color-primary);
+  --status-bg-opacity: 0.15;
+  --status-border-opacity: 0.25;
+
+  --color-success-rgb: 33, 128, 141;
+  --color-error-rgb: 192, 21, 47;
+  --color-warning-rgb: 168, 75, 47;
+  --color-info-rgb: 98, 108, 113;
+
+  --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 30px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 550;
+  --font-weight-bold: 600;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --letter-spacing-tight: -0.01em;
+
+  --space-0: 0;
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+
+  --radius-sm: 6px;
+  --radius-base: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-gray-400-rgb: 119, 124, 124;
+    --color-teal-300-rgb: 50, 184, 198;
+    --color-gray-300-rgb: 167, 169, 169;
+    --color-gray-200-rgb: 245, 245, 245;
+
+    --color-bg-1: rgba(29, 78, 216, 0.15);
+    --color-bg-2: rgba(180, 83, 9, 0.15);
+    --color-bg-3: rgba(21, 128, 61, 0.15);
+    --color-bg-4: rgba(185, 28, 28, 0.15);
+    --color-bg-5: rgba(107, 33, 168, 0.15);
+    --color-bg-6: rgba(194, 65, 12, 0.15);
+    --color-bg-7: rgba(190, 24, 93, 0.15);
+    --color-bg-8: rgba(8, 145, 178, 0.15);
+
+    --color-background: var(--color-charcoal-700);
+    --color-surface: var(--color-charcoal-800);
+    --color-text: var(--color-gray-200);
+    --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+    --color-primary: var(--color-teal-300);
+    --color-primary-hover: var(--color-teal-400);
+    --color-primary-active: var(--color-teal-800);
+    --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+    --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+    --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+    --color-error: var(--color-red-400);
+    --color-success: var(--color-teal-300);
+    --color-warning: var(--color-orange-400);
+    --color-info: var(--color-gray-300);
+    --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+    --color-btn-primary-text: var(--color-slate-900);
+    --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+    --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+    --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    --color-select-caret: rgba(var(--color-gray-200-rgb), 0.8);
+
+    --color-success-rgb: var(--color-teal-300-rgb);
+    --color-error-rgb: var(--color-red-400-rgb);
+    --color-warning-rgb: var(--color-orange-400-rgb);
+    --color-info-rgb: var(--color-gray-300-rgb);
+  }
+}
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: var(--line-height-normal);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.header {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-24) var(--space-16);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+}
+
+.header h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-8);
+    color: var(--color-text);
+}
+
+.header p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-20);
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    display: flex;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.nav-tab {
+    padding: var(--space-10) var(--space-20);
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.nav-tab:hover {
+    background-color: var(--color-secondary-hover);
+}
+
+.nav-tab.active {
+    background-color: var(--color-primary);
+    color: var(--color-btn-primary-text);
+    border-color: var(--color-primary);
+}
+
+/* Main Content */
+.main-content {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: var(--space-32) var(--space-16);
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.section h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-24);
+    color: var(--color-text);
+}
+
+.section h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-16);
+    color: var(--color-text);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-16);
+    margin-bottom: var(--space-32);
+}
+
+.stat-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-24);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-value {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-8);
+}
+
+.stat-description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+}
+
+/* Goals Grid */
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-16);
+    margin-bottom: var(--space-32);
+}
+
+.goal-card {
+    background-color: var(--color-bg-1);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-20);
+}
+
+.goal-card:nth-child(2) { background-color: var(--color-bg-2); }
+.goal-card:nth-child(3) { background-color: var(--color-bg-3); }
+.goal-card:nth-child(4) { background-color: var(--color-bg-4); }
+.goal-card:nth-child(5) { background-color: var(--color-bg-5); }
+
+.goal-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-8);
+    color: var(--color-text);
+}
+
+.goal-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Best Practices */
+.practice-category {
+    margin-bottom: var(--space-32);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    margin-bottom: var(--space-20);
+}
+
+.category-icon {
+    font-size: var(--font-size-3xl);
+}
+
+.practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-16);
+}
+
+.practice-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-20);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.practice-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.practice-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-12);
+    color: var(--color-text);
+}
+
+.practice-points {
+    list-style: none;
+    margin-bottom: var(--space-12);
+}
+
+.practice-points li {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    padding-left: var(--space-20);
+    position: relative;
+}
+
+.practice-points li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+}
+
+.practice-impact {
+    display: inline-block;
+    background-color: var(--color-bg-3);
+    color: var(--color-success);
+    padding: var(--space-4) var(--space-12);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Common Mistakes */
+.mistakes-grid {
+    display: grid;
+    gap: var(--space-16);
+}
+
+.mistake-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-left: 4px solid var(--color-error);
+    border-radius: var(--radius-lg);
+    padding: var(--space-20);
+    box-shadow: var(--shadow-sm);
+}
+
+.mistake-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-12);
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+}
+
+.mistake-title:before {
+    content: "⚠️";
+}
+
+.mistake-problem {
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+    margin-bottom: var(--space-12);
+    font-weight: var(--font-weight-medium);
+}
+
+.mistake-fix {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    padding: var(--space-12);
+    background-color: var(--color-bg-3);
+    border-radius: var(--radius-base);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-8);
+}
+
+.mistake-fix:before {
+    content: "💡";
+    flex-shrink: 0;
+}
+
+/* Examples */
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-20);
+}
+
+.example-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-24);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--duration-normal) var(--ease-standard);
+}
+
+.example-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.example-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-12);
+    margin-bottom: var(--space-16);
+}
+
+.example-emoji {
+    font-size: var(--font-size-4xl);
+}
+
+.example-name {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+.example-strengths {
+    list-style: none;
+    margin-bottom: var(--space-16);
+}
+
+.example-strengths li {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    padding-left: var(--space-20);
+    position: relative;
+}
+
+.example-strengths li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.example-feature {
+    background-color: var(--color-bg-1);
+    padding: var(--space-12);
+    border-radius: var(--radius-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+}
+
+/* Checklist */
+.checklist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-24);
+    flex-wrap: wrap;
+    gap: var(--space-16);
+}
+
+.progress-bar-container {
+    flex: 1;
+    min-width: 200px;
+}
+
+.progress-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 24px;
+    background-color: var(--color-secondary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--color-primary);
+    transition: width var(--duration-normal) var(--ease-standard);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-btn-primary-text);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+}
+
+.reset-btn {
+    padding: var(--space-10) var(--space-20);
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-base);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.reset-btn:hover {
+    background-color: var(--color-secondary-hover);
+}
+
+.checklist-categories {
+    display: grid;
+    gap: var(--space-24);
+}
+
+.checklist-category {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-24);
+    box-shadow: var(--shadow-sm);
+}
+
+.checklist-category h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-16);
+    color: var(--color-text);
+}
+
+.checklist-items {
+    display: grid;
+    gap: var(--space-12);
+}
+
+.checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-12);
+    padding: var(--space-12);
+    border-radius: var(--radius-base);
+    transition: background-color var(--duration-fast) var(--ease-standard);
+}
+
+.checklist-item:hover {
+    background-color: var(--color-secondary);
+}
+
+.checklist-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: var(--color-primary);
+}
+
+.checklist-item label {
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    cursor: pointer;
+    flex: 1;
+}
+
+.checklist-item input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .nav-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav-tab {
+        white-space: nowrap;
+    }
+    
+    .stats-grid,
+    .goals-grid,
+    .practices-grid,
+    .examples-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .checklist-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>📱 Mobile App Signup Flow Guide</h1>
+            <p>Optimize your mobile app signup flow to reduce dropoff and increase conversions</p>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-section="overview">Overview</button>
+                <button class="nav-tab" data-section="best-practices">Best Practices</button>
+                <button class="nav-tab" data-section="mistakes">Common Mistakes</button>
+                <button class="nav-tab" data-section="examples">Examples</button>
+                <button class="nav-tab" data-section="checklist">Checklist</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Overview Section -->
+        <section class="section active" id="overview">
+            <h2>Understanding Signup Flows</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">64%</div>
+                    <div class="stat-description">of users drop off during typical SaaS signup flows</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">25%</div>
+                    <div class="stat-description">conversion rate for forms with 3 or fewer fields</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15%</div>
+                    <div class="stat-description">conversion rate for forms with 6+ fields</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">+42%</div>
+                    <div class="stat-description">increase in conversions with trust badges</div>
+                </div>
+            </div>
+
+            <h3>Key Goals of an Effective Signup Flow</h3>
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <div class="goal-title">📝 Short and Sweet</div>
+                    <div class="goal-description">Users are more likely to complete signup if it's quick and easy to follow</div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-title">✨ Personalized</div>
+                    <div class="goal-description">Tailor the experience using user's name, location, or interests</div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-title">🎯 Useful</div>
+                    <div class="goal-description">Collect necessary information without asking for too much</div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-title">✓ Error-Free</div>
+                    <div class="goal-description">Prevent errors and allow users to recover quickly</div>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-title">🔒 Secure</div>
+                    <div class="goal-description">Protect personal information with encryption and secure practices</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices Section -->
+        <section class="section" id="best-practices">
+            <h2>Best Practices for Signup Flows</h2>
+
+            <!-- Simplification -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">⚡</span>
+                    <h3>Simplification</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Minimize Fields</div>
+                        <ul class="practice-points">
+                            <li>Ask for essentials only (email, password)</li>
+                            <li>Save additional info for after signup</li>
+                            <li>Reduce form fields by 50%+ for better completion</li>
+                        </ul>
+                        <span class="practice-impact">+100% completion rates</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Multi-Step Forms</div>
+                        <ul class="practice-points">
+                            <li>Break long forms into 3-5 smaller steps</li>
+                            <li>Limit each step to 5-9 fields maximum</li>
+                            <li>Show progress indicator at top</li>
+                        </ul>
+                        <span class="practice-impact">+86% conversion lift</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Remove Obstacles</div>
+                        <ul class="practice-points">
+                            <li>Skip email verification initially</li>
+                            <li>Avoid requiring phone numbers</li>
+                            <li>Don't ask for credit card upfront</li>
+                        </ul>
+                        <span class="practice-impact">Reduced dropoff by 60%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Integration -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">🔗</span>
+                    <h3>Social Integration</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Social Login Options</div>
+                        <ul class="practice-points">
+                            <li>Offer Google, Apple, or Facebook login</li>
+                            <li>Enable one-tap signup where possible</li>
+                            <li>Auto-fill name and email from social profiles</li>
+                        </ul>
+                        <span class="practice-impact">+30% signup completion</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Passwordless Auth</div>
+                        <ul class="practice-points">
+                            <li>Use biometric authentication (fingerprint/face)</li>
+                            <li>Send one-time passwords via SMS or email</li>
+                            <li>Enable passkeys for modern devices</li>
+                        </ul>
+                        <span class="practice-impact">+20% mobile completion</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Optimization -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">📱</span>
+                    <h3>Mobile Optimization</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Touch-Friendly Design</div>
+                        <ul class="practice-points">
+                            <li>Use buttons with 44x44px minimum touch targets</li>
+                            <li>Add adequate padding around interactive elements</li>
+                            <li>Use high contrast colors for visibility</li>
+                        </ul>
+                        <span class="practice-impact">-40% mobile errors</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Responsive Inputs</div>
+                        <ul class="practice-points">
+                            <li>Use HTML5 input types (email, tel, number)</li>
+                            <li>Display context-specific mobile keyboards</li>
+                            <li>Add input masks for formatted data</li>
+                        </ul>
+                        <span class="practice-impact">+40% mobile completion</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Mobile-First Design</div>
+                        <ul class="practice-points">
+                            <li>Design for small screens first</li>
+                            <li>Minimize scrolling and vertical layout</li>
+                            <li>Test on real devices regularly</li>
+                        </ul>
+                        <span class="practice-impact">+25% mobile conversion</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progressive Profiling -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">📊</span>
+                    <h3>Progressive Profiling</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Collect Data Gradually</div>
+                        <ul class="practice-points">
+                            <li>Ask few questions at signup, more later</li>
+                            <li>Build complete profiles over multiple interactions</li>
+                            <li>Adapt questions based on user behavior</li>
+                        </ul>
+                        <span class="practice-impact">+50% retention</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Smart Forms</div>
+                        <ul class="practice-points">
+                            <li>Remember previously submitted information</li>
+                            <li>Replace completed fields with new questions</li>
+                            <li>Show only relevant fields based on profile</li>
+                        </ul>
+                        <span class="practice-impact">Better lead quality over time</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Handling -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">🛡️</span>
+                    <h3>Error Handling</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Inline Validation</div>
+                        <ul class="practice-points">
+                            <li>Validate as user leaves each field</li>
+                            <li>Show error messages inline, not in summary</li>
+                            <li>Use green checkmark for valid fields</li>
+                        </ul>
+                        <span class="practice-impact">+30% completion rates</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Clear Error Messages</div>
+                        <ul class="practice-points">
+                            <li>Explain what went wrong in plain language</li>
+                            <li>Tell users how to fix the error</li>
+                            <li>Use friendly, professional tone</li>
+                        </ul>
+                        <span class="practice-impact">Reduced form abandonment</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Prevent Errors</div>
+                        <ul class="practice-points">
+                            <li>Auto-fill city/state from ZIP code</li>
+                            <li>Auto-format phone and credit card fields</li>
+                            <li>Limit input to valid characters</li>
+                        </ul>
+                        <span class="practice-impact">-50% validation errors</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personalization -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">🎨</span>
+                    <h3>Personalization</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Welcome Survey</div>
+                        <ul class="practice-points">
+                            <li>Ask about user goals on first screen</li>
+                            <li>Customize experience based on answers</li>
+                            <li>Show relevant features to each user segment</li>
+                        </ul>
+                        <span class="practice-impact">-25% churn with personalization</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Intent-Based Flow</div>
+                        <ul class="practice-points">
+                            <li>Different signup for individual vs. team users</li>
+                            <li>Vary questions based on user role or industry</li>
+                            <li>Show use-case-specific messaging</li>
+                        </ul>
+                        <span class="practice-impact">Higher activation rates</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">🔐</span>
+                    <h3>Security</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Data Protection</div>
+                        <ul class="practice-points">
+                            <li>Use SSL/HTTPS for all communications</li>
+                            <li>Encrypt sensitive data in transit and at rest</li>
+                            <li>Use strong password requirements with feedback</li>
+                        </ul>
+                        <span class="practice-impact">Builds user trust</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Authentication Security</div>
+                        <ul class="practice-points">
+                            <li>Implement multi-factor authentication (MFA)</li>
+                            <li>Offer biometric options (fingerprint, face)</li>
+                            <li>Use device fingerprinting for fraud detection</li>
+                        </ul>
+                        <span class="practice-impact">Prevents unauthorized access</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust & Social Proof -->
+            <div class="practice-category">
+                <div class="category-header">
+                    <span class="category-icon">⭐</span>
+                    <h3>Trust &amp; Social Proof</h3>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card">
+                        <div class="practice-title">Trust Badges</div>
+                        <ul class="practice-points">
+                            <li>Display security/SSL badges</li>
+                            <li>Show payment method logos</li>
+                            <li>Include 'No credit card required' messaging</li>
+                        </ul>
+                        <span class="practice-impact">+42% conversion lift</span>
+                    </div>
+                    <div class="practice-card">
+                        <div class="practice-title">Social Proof</div>
+                        <ul class="practice-points">
+                            <li>Show number of active users (e.g., '10,000+ users')</li>
+                            <li>Display customer testimonials</li>
+                            <li>Show company logos of clients</li>
+                        </ul>
+                        <span class="practice-impact">+34% conversion improvement</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Common Mistakes Section -->
+        <section class="section" id="mistakes">
+            <h2>Common Mistakes to Avoid</h2>
+            <div class="mistakes-grid">
+                <div class="mistake-card">
+                    <div class="mistake-title">Asking for Too Much Information</div>
+                    <div class="mistake-problem">Problem: Forms with 10+ fields have only 20% completion rate</div>
+                    <div class="mistake-fix">Start with email and password only, ask for more later</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Forcing Email Verification Immediately</div>
+                    <div class="mistake-problem">Problem: 10-30% of users drop off before email verification</div>
+                    <div class="mistake-fix">Verify email after users experience core value first</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Requesting Phone Number</div>
+                    <div class="mistake-problem">Problem: Phone number is the #1 conversion killer for B2C apps</div>
+                    <div class="mistake-fix">Only ask for phone if absolutely necessary for your business</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Missing Social Login Options</div>
+                    <div class="mistake-problem">Problem: Reduces signup speed and increases password reset requests</div>
+                    <div class="mistake-fix">Add Google, Apple, and Facebook login buttons prominently</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Poor Mobile Optimization</div>
+                    <div class="mistake-problem">Problem: Tiny buttons, horizontal scrolling, unresponsive forms</div>
+                    <div class="mistake-fix">Design mobile-first with 44px+ touch targets</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Weak Error Messages</div>
+                    <div class="mistake-problem">Problem: Users don't know what went wrong or how to fix it</div>
+                    <div class="mistake-fix">Use clear, helpful messages placed inline with the field</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">No Progress Indication</div>
+                    <div class="mistake-problem">Problem: Users don't know how far along they are in the process</div>
+                    <div class="mistake-fix">Show progress bar or step counter (e.g., '2 of 4 steps')</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">One-Size-Fits-All Approach</div>
+                    <div class="mistake-problem">Problem: Generic flows don't address different user needs</div>
+                    <div class="mistake-fix">Create conditional flows based on user intent or role</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Using CAPTCHAs</div>
+                    <div class="mistake-problem">Problem: Breaks signup momentum and frustrates users</div>
+                    <div class="mistake-fix">Use honeypot fields or email validation instead</div>
+                </div>
+
+                <div class="mistake-card">
+                    <div class="mistake-title">Removing Field Labels</div>
+                    <div class="mistake-problem">Problem: Placeholder text disappears when typing, confusing users</div>
+                    <div class="mistake-fix">Always include visible labels above form fields</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section class="section" id="examples">
+            <h2>Real-World Examples</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-header">
+                        <span class="example-emoji">🎵</span>
+                        <div class="example-name">Spotify</div>
+                    </div>
+                    <ul class="example-strengths">
+                        <li>Asks for music genre preferences upfront</li>
+                        <li>Delivers personalized playlists immediately</li>
+                        <li>Creates habits through Discovery Weekly</li>
+                    </ul>
+                    <div class="example-feature">Key: Progressive profiling through listening behavior</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <span class="example-emoji">🎬</span>
+                        <div class="example-name">Netflix</div>
+                    </div>
+                    <ul class="example-strengths">
+                        <li>Preview content before signup required</li>
+                        <li>Build detailed profiles through viewing habits</li>
+                        <li>Personalization improves continuously over time</li>
+                    </ul>
+                    <div class="example-feature">Key: Progressive profiling through engagement</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <span class="example-emoji">💼</span>
+                        <div class="example-name">LinkedIn</div>
+                    </div>
+                    <ul class="example-strengths">
+                        <li>Spreads profile building over multiple sessions</li>
+                        <li>Shows profile strength meter with incentives</li>
+                        <li>Uses network effects to validate information</li>
+                    </ul>
+                    <div class="example-feature">Key: Gamified profile completion with social proof</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <span class="example-emoji">🎥</span>
+                        <div class="example-name">TikTok</div>
+                    </div>
+                    <ul class="example-strengths">
+                        <li>Shows feed preview without requiring signup</li>
+                        <li>Delivers value before asking for commitment</li>
+                        <li>Gathers preferences through swipes and interactions</li>
+                    </ul>
+                    <div class="example-feature">Key: Value-first approach with implicit data collection</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <span class="example-emoji">🦉</span>
+                        <div class="example-name">Duolingo</div>
+                    </div>
+                    <ul class="example-strengths">
+                        <li>Gamified onboarding with character mascot</li>
+                        <li>Clear learning goals guide the experience</li>
+                        <li>Immediate engagement before heavy data collection</li>
+                    </ul>
+                    <div class="example-feature">Key: Engaging storytelling in onboarding</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist Section -->
+        <section class="section" id="checklist">
+            <h2>Signup Flow Optimization Checklist</h2>
+            
+            <div class="checklist-header">
+                <div class="progress-bar-container">
+                    <div class="progress-label">Overall Completion: <span id="progress-text">0%</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+                <button class="reset-btn" id="reset-checklist">🔄 Reset Checklist</button>
+            </div>
+
+            <div class="checklist-categories">
+                <!-- Form Design -->
+                <div class="checklist-category">
+                    <h3>📝 Form Design</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-1" class="checklist-checkbox">
+                            <label for="check-1">Minimize form fields to 3 or fewer for initial signup</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-2" class="checklist-checkbox">
+                            <label for="check-2">Use multi-step form design (3-5 steps maximum)</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-3" class="checklist-checkbox">
+                            <label for="check-3">Show progress bar or step counter</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-4" class="checklist-checkbox">
+                            <label for="check-4">Make form responsive for mobile and desktop</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-5" class="checklist-checkbox">
+                            <label for="check-5">Enable autofocus on first form field</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Integration -->
+                <div class="checklist-category">
+                    <h3>🔗 Social Integration</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-6" class="checklist-checkbox">
+                            <label for="check-6">Add Google login/signup button</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-7" class="checklist-checkbox">
+                            <label for="check-7">Add Apple login/signup button</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-8" class="checklist-checkbox">
+                            <label for="check-8">Add Facebook login/signup button</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-9" class="checklist-checkbox">
+                            <label for="check-9">Place social buttons prominently at top</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-10" class="checklist-checkbox">
+                            <label for="check-10">Make social login the default option</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Handling -->
+                <div class="checklist-category">
+                    <h3>🛡️ Error Handling</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-11" class="checklist-checkbox">
+                            <label for="check-11">Implement real-time inline validation</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-12" class="checklist-checkbox">
+                            <label for="check-12">Display clear error messages inline</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-13" class="checklist-checkbox">
+                            <label for="check-13">Show green checkmark for valid fields</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-14" class="checklist-checkbox">
+                            <label for="check-14">Prevent field validation errors with constraints</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-15" class="checklist-checkbox">
+                            <label for="check-15">Auto-format phone, ZIP, and credit card fields</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Optimization -->
+                <div class="checklist-category">
+                    <h3>📱 Mobile Optimization</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-16" class="checklist-checkbox">
+                            <label for="check-16">Use 44x44px minimum button/touch targets</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-17" class="checklist-checkbox">
+                            <label for="check-17">Use appropriate HTML5 input types</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-18" class="checklist-checkbox">
+                            <label for="check-18">Display context-specific mobile keyboards</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-19" class="checklist-checkbox">
+                            <label for="check-19">Test form on real mobile devices</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-20" class="checklist-checkbox">
+                            <label for="check-20">Ensure proper spacing between elements</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div class="checklist-category">
+                    <h3>🔐 Security</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-21" class="checklist-checkbox">
+                            <label for="check-21">Use HTTPS/SSL for all communications</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-22" class="checklist-checkbox">
+                            <label for="check-22">Encrypt sensitive data at rest</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-23" class="checklist-checkbox">
+                            <label for="check-23">Implement password strength meter</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-24" class="checklist-checkbox">
+                            <label for="check-24">Offer biometric authentication option</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-25" class="checklist-checkbox">
+                            <label for="check-25">Provide MFA (multi-factor authentication)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalization -->
+                <div class="checklist-category">
+                    <h3>🎨 Personalization</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-26" class="checklist-checkbox">
+                            <label for="check-26">Include welcome survey with user goals</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-27" class="checklist-checkbox">
+                            <label for="check-27">Show role-based or industry-based questions</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-28" class="checklist-checkbox">
+                            <label for="check-28">Customize next steps based on user profile</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-29" class="checklist-checkbox">
+                            <label for="check-29">Implement progressive profiling strategy</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-30" class="checklist-checkbox">
+                            <label for="check-30">Personalize email confirmations</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust & Credibility -->
+                <div class="checklist-category">
+                    <h3>⭐ Trust &amp; Credibility</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-31" class="checklist-checkbox">
+                            <label for="check-31">Add security/SSL trust badge</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-32" class="checklist-checkbox">
+                            <label for="check-32">Display 'No credit card required' message</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-33" class="checklist-checkbox">
+                            <label for="check-33">Show number of active users or testimonials</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-34" class="checklist-checkbox">
+                            <label for="check-34">Include company logo or brand mark</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-35" class="checklist-checkbox">
+                            <label for="check-35">Display payment method logos accepted</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics & Testing -->
+                <div class="checklist-category">
+                    <h3>📊 Analytics &amp; Testing</h3>
+                    <div class="checklist-items">
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-36" class="checklist-checkbox">
+                            <label for="check-36">Track signup completion rate by step</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-37" class="checklist-checkbox">
+                            <label for="check-37">Monitor form abandonment points</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-38" class="checklist-checkbox">
+                            <label for="check-38">A/B test form length and fields</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-39" class="checklist-checkbox">
+                            <label for="check-39">A/B test social login prominence</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check-40" class="checklist-checkbox">
+                            <label for="check-40">Analyze user feedback on signup experience</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navigation functionality
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.section');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetSection = tab.dataset.section;
+                
+                // Update active tab
+                navTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active section
+                sections.forEach(s => s.classList.remove('active'));
+                document.getElementById(targetSection).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Checklist functionality - using in-memory state
+        const checkboxes = document.querySelectorAll('.checklist-checkbox');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const resetBtn = document.getElementById('reset-checklist');
+        const totalItems = checkboxes.length;
+
+        // In-memory state object
+        let checklistState = {};
+
+        // Initialize state
+        checkboxes.forEach(checkbox => {
+            checklistState[checkbox.id] = false;
+        });
+
+        function updateProgress() {
+            const checkedCount = Object.values(checklistState).filter(val => val === true).length;
+            const percentage = Math.round((checkedCount / totalItems) * 100);
+            
+            progressFill.style.width = percentage + '%';
+            progressFill.textContent = percentage + '%';
+            progressText.textContent = percentage + '%';
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                checklistState[e.target.id] = e.target.checked;
+                updateProgress();
+            });
+        });
+
+        resetBtn.addEventListener('click', () => {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checklistState[checkbox.id] = false;
+            });
+            updateProgress();
+        });
+
+        // Initialize progress on load
+        updateProgress();
+    </script>
+</body>
+</html>
